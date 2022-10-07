@@ -18,15 +18,6 @@ public class GermanTranslator implements Translator {
 			return "Übersetzung der Zahl " + number + " nicht möglich, " + "Version: " + version;
 
 		}
-
-
-	/*	if (number >= 1 && number <= 10) {
-			return "" + number;
-		} else {
-			return "Übersetzung der Zahl " + number + " nicht möglich, " + "Version: " + version;
-		}
-    */
-
 	}
 
 	/**
