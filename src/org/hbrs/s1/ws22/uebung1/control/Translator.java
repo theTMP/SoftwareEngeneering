@@ -9,7 +9,7 @@ package org.hbrs.s1.ws22.uebung1.control;
  *
  */
 
-interface Translator {
+public interface Translator {  //Inteface auf public geändert, damit Client auf das Interface zugreifen kann
 	
 	double version = 1.0; // Version des Interface
 	
