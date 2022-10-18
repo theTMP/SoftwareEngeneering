@@ -13,6 +13,6 @@ public class ConcreteMember implements Member{
         return ID;
     }
     public String toString() {
-        return "ID = [" + ID + "]";
+        return "Member (ID = [" + ID + "])";
     }
 }
