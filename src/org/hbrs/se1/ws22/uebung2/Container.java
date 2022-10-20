@@ -1,5 +1,6 @@
 package org.hbrs.se1.ws22.uebung2;
 
+import java.awt.event.ContainerAdapter;
 import java.util.LinkedList;
 
 public class Container {
@@ -11,6 +12,9 @@ public class Container {
     LinkedList<Member> list = new LinkedList<>(); //Linked List statt ArrayList, da wir häufig Member hinzufügen und löschen wollen. Bei ArrayList großer Aufwand durch kopieren von Werten in neues Array.
 
     public void addMember(Member member) throws ContainerException {
+        if (member == null) {
+            throw new ContainerException("Null wurde übergebn");
+        }
 
         for (Member m : list) {
             if (m.getID() == member.getID()) {
@@ -21,7 +25,11 @@ public class Container {
         list.addLast(member);
 
     }
-    public String deleteMember(Integer id) {        //Nachteile von Fehlerhandling ohne Exception: Der Fehler kann nicht im Programm behandelt werden und darauf reagiert werden.
+    public String deleteMember(Integer id) throws ContainerException {        //Nachteile von Fehlerhandling ohne Exception: Der Fehler kann nicht im Programm behandelt werden und darauf reagiert werden.
+
+        if (id == null) {
+            throw new ContainerException("Null wurde übergeben");
+        }
         for (Member m : list) {
             if (m.getID() == id) {
                 list.remove(m);

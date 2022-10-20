@@ -62,6 +62,11 @@ public class ContainerTest {
         assertEquals(3,container.size());
 
     }
+    @Test
+    void test_null() throws Container.ContainerException {
+        assertThrows(Container.ContainerException.class,() -> container.addMember(null));
+        assertThrows(Container.ContainerException.class,() -> container.deleteMember(null));
+    }
 
 
 
