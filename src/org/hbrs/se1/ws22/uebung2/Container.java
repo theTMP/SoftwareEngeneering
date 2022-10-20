@@ -32,7 +32,9 @@ public class Container {
 
     }
     public void dump() {
-        System.out.println(list.getLast());
+        for (Member m : list) {
+            System.out.println(m);
+        }
     }
 
     public int size() {
@@ -48,12 +50,13 @@ public class Container {
 
         try {
             c.addMember(m1);
+            c.addMember(m4);
         } catch (ContainerException e) {
             throw new RuntimeException(e);
         }
 
-        System.out.println(m1.getID());
-        System.out.println(m2.getID());
+       c.dump();
+
 
 
     }
