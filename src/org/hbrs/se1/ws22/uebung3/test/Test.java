@@ -49,13 +49,15 @@ public class Test {
         container.addMember(m1);
         assertThrows(PersistenceException.class, () -> container.store());
 
+
     }
 
     @org.junit.jupiter.api.Test
     void test_MonogDB_Strat() throws Container.ContainerException {
         container.setPersistanceStrategy(new PersistenceStrategyMongoDB<Member>());
         container.addMember(m2);
-        assertThrows(UnsupportedOperationException.class, () -> container.store());
+        PersistenceException s = assertThrows(PersistenceException.class, () -> container.store());
+        assertEquals(s.getMessage(), "MongoDB is not available");
 
     }
     @org.junit.jupiter.api.Test

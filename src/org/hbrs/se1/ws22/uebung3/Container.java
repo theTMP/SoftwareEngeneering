@@ -63,6 +63,10 @@ public class Container {
         if (persStrat == null) {
             throw new PersistenceException(PersistenceException.ExceptionType.NoStrategyIsSet,"No strategy is set");
         }
+
+        if (persStrat instanceof PersistenceStrategyMongoDB<?>) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable,"MongoDB is not available");
+        }
       //  persStrat.openConnection();
         persStrat.save(list);
        // persStrat.closeConnection();
