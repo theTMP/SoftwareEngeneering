@@ -6,12 +6,26 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Shell {
     private static Scanner sc;
 
     private static boolean exit = false;
-    private static Container container = Container.getInstance();
+    private static Container container;
+
+    private Ausgabe ausgabe = new Ausgabe();
+
+    PersistenceStrategy<Mitarbeiter> persStrat = null;
+
+    public Shell(Container container) {
+        this.container = container;
+    }
+
+   // ToDo:Dump Methode in Ausgabe Klasse mit Dump Methode
+    //Main Klasse insatnziiert Container, Container + Persistance Strategie und setzt diese in den Container ein und startet Eingabe Klasse
+    // Packages: Model(Container,Mitrabeiter,ContainerException,Persistence-Klassen) View(Ausgabe) Controller(Main,Eingabe)
+    //Sub-Packages in Model eins für Exceptions
 
 
 
@@ -23,6 +37,10 @@ public class Shell {
 
 
     //Methoden
+
+    private void setPersStrat(PersistenceStrategy<Mitarbeiter> persStrat) {
+        this.persStrat = persStrat;
+    }
     private void enter(Mitarbeiter mitarbeiter) throws ContainerException {
         container.addEmployee(mitarbeiter);
     }
@@ -87,8 +105,6 @@ public class Shell {
     }
 
     private void load() throws PersistenceException {
-        PersistenceStrategy<Mitarbeiter> persStrat = new PersistenceStrategyStream<Mitarbeiter>();
-        container.setStrategy(persStrat);
         System.out.println("merge / force");
         String command = sc.next();
         try {
@@ -105,34 +121,24 @@ public class Shell {
     }
 
     private void store() throws PersistenceException {
-        PersistenceStrategy<Mitarbeiter> persStrat = new PersistenceStrategyStream<Mitarbeiter>();
-        container.setStrategy(persStrat);
         container.store();
     }
 
     private void help() {
-        System.out.println("Befehle: \n enter -> Eingabe eines Mitarbeiters \n store -> Abspeicherung der Eingetragenen Mitarbeiter \n load -> Laden der abgespeicherten Mitarbeiter \n dump -> Ausgabe der Mitarbeiter auf dem Bildschirm \n serach -> Suche einen Mitarbeiter basierend auf seiner Expertise \n exit -> Schließen der Anwendung");
+        System.out.println("Befehle: \n enter -> Eingabe eines Mitarbeiters \n store -> Abspeicherung der Eingetragenen Mitarbeiter \n load -> Laden der abgespeicherten Mitarbeiter \n dump -> Ausgabe der Mitarbeiter auf dem Bildschirm \n dumpAbteilung -> Ausgabe der Mitarbeiter der entsprechenden Abteilung \n serach -> Suche einen Mitarbeiter basierend auf seiner Expertise \n exit -> Schließen der Anwendung");
     }
 
     public void dump() {
-        System.out.println("----------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%25s %25s %25s %25s %25s","ID", "Vorname", "Nachname", "Rolle", "Abteilung");
-        System.out.println();
-        System.out.println("----------------------------------------------------------------------------------------------------------------");
-        List<Mitarbeiter> liste = container.getCurrentList();
-        liste.sort(null);
-      /*  liste.stream()
-
-                .forEach(element -> System.out.format("%15s %15s %15s %15s",element.getId(),element.getVorname(),element.getNachname(),element.getRolle(),element.getAbteilung()));
-        */
-        for (Mitarbeiter m :liste) {
-            System.out.format("%25s %25s %25s %25s %25s",m.getId(),m.getVorname(),m.getNachname(),m.getRolle(),m.getAbteilung());
-            System.out.println();
-        }
-        System.out.println("----------------------------------------------------------------------------------------------------------------");
-
-
-
+        ausgabe.dump(container.getCurrentList());
+    }
+    public void dumpAbteilung(String abteilung) {
+        ausgabe.dumpAbteilung(abteilung,container.getCurrentList());
+        System.out.println("Mitarbeiter erfolgreich durchsucht");
+    }
+    public void dumpAbteilung() {
+        System.out.println("Geben Sie die gewünschte Abteilung ein: ");
+        String s = sc.next();
+        dumpAbteilung(s);
     }
     //Search Methode sucht Mitarbeiter nach Expertise. Dabei wird die java Hash-Map nach dem Key durchsucht.
 
@@ -176,6 +182,9 @@ public class Shell {
                     break;
                 case "dump":
                     dump();
+                    break;
+                case "dumpAbteilung":
+                    dumpAbteilung();
                     break;
                 case "search":
                     search();

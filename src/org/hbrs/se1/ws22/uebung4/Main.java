@@ -4,7 +4,10 @@ public class Main {
 
 
     public static void main(String[] args) throws PersistenceException, ContainerException {
-        Shell shell = new Shell();
+        Container container = Container.getInstance();
+        PersistenceStrategyStream<Mitarbeiter> persStrat = new PersistenceStrategyStream<>();
+        container.setStrategy(persStrat);
+        Shell shell = new Shell(container);
         shell.run();
 
 
