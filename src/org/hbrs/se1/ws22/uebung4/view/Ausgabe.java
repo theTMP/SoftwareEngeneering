@@ -1,7 +1,8 @@
-package org.hbrs.se1.ws22.uebung4;
+package org.hbrs.se1.ws22.uebung4.view;
+
+import org.hbrs.se1.ws22.uebung4.model.Mitarbeiter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Ausgabe {
 

@@ -1,4 +1,4 @@
-package org.hbrs.se1.ws22.uebung4;
+package org.hbrs.se1.ws22.uebung4.model.Exceptions;
 
 public class ContainerException extends Exception {
     private Integer id;

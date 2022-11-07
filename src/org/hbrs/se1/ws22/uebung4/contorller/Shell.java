@@ -1,12 +1,15 @@
-package org.hbrs.se1.ws22.uebung4;
+package org.hbrs.se1.ws22.uebung4.contorller;
 
 
+
+import org.hbrs.se1.ws22.uebung4.model.Exceptions.PersistenceException;
+import org.hbrs.se1.ws22.uebung4.view.Ausgabe;
+import org.hbrs.se1.ws22.uebung4.model.Exceptions.ContainerException;
+import org.hbrs.se1.ws22.uebung4.model.*;
 
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Shell {
     private static Scanner sc;
@@ -51,6 +54,7 @@ public class Shell {
     private void enter() throws PersistenceException, ContainerException {
         int i = 0;
         boolean correct = false;
+        boolean formatIncorrect = true;
         boolean nextExpertise = true;
         int ID = 0;
         String vName;
@@ -58,7 +62,7 @@ public class Shell {
         String rolle;
         String abteilung;
         String expertise = "";
-        Integer expertisenLvl;
+        Integer expertisenLvl = 0;
         HashMap<String,Integer> expertisen = new HashMap<>();
 
         do {
@@ -88,7 +92,15 @@ public class Shell {
         System.out.println("Geben Sie die Expertise und das Expertisen-Level (1-3) mit einem Leerzeichen getrennt an: ");
         while (nextExpertise) {
             expertise = sc.next();
-            expertisenLvl = Integer.parseInt(sc.next());
+            do {
+                try {
+                    expertisenLvl = Integer.parseInt(sc.next());
+                    formatIncorrect = false;
+                } catch (NumberFormatException e) {
+                    System.out.println("Sie haben keinen Integer Value zwischen 1-3 eingegeben");
+
+                }
+            } while (formatIncorrect);
             expertisen.put(expertise,expertisenLvl);
             System.out.println("Weitere Exeprtisen vorhanden? Ja / Nein");
             if (sc.next().toLowerCase().equals("nein")) {
@@ -148,8 +160,8 @@ public class Shell {
             if (mitarbeiter.getExpertisen().containsKey(key)) {
                 System.out.println(mitarbeiter);
             }
-            System.out.println("Mitarbeiter erfolgreich durchsucht");
         }
+        System.out.println("Mitarbeiter erfolgreich durchsucht");
     }
     public void search() {
         System.out.println("Nach welcher Expertise wollen Sie suchen?");

@@ -1,6 +1,9 @@
-package org.hbrs.se1.ws22.uebung4;
+package org.hbrs.se1.ws22.uebung4.model;
 
 
+
+import org.hbrs.se1.ws22.uebung4.model.Exceptions.ContainerException;
+import org.hbrs.se1.ws22.uebung4.model.Exceptions.PersistenceException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -53,7 +56,7 @@ public class Container {
         this.strategy = strategy;
     }
 
-    public void store() throws PersistenceException{
+    public void store() throws PersistenceException {
         if(strategy == null){
             throw new PersistenceException(PersistenceException.ExceptionType.NoStrategyIsSet, "No strategy is set.");
         }

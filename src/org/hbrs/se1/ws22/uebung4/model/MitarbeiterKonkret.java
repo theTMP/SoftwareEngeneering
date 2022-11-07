@@ -1,8 +1,7 @@
-package org.hbrs.se1.ws22.uebung4;
+package org.hbrs.se1.ws22.uebung4.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MitarbeiterKonkret implements Mitarbeiter, Serializable {
     private int ID;
